@@ -3,6 +3,7 @@ use crate::compat::{
     string::{String, ToString},
     vec::{self, Vec},
 };
+use crate::Message;
 use core::fmt::{self, Debug, Display};
 use core::iter::FromIterator;
 use core::ops::Deref;
@@ -97,12 +98,13 @@ impl<'a> From<&'a str> for AddressSet {
 /// string, the first `#` symbol is used to separate the type from the
 /// rest of the address.  If no `#` symbol is found, the address is
 /// assumed to be of `tt = 0` (local worker).
-#[derive(Serialize, Deserialize, Clone, Hash, Ord, PartialOrd, Eq, PartialEq)]
+#[derive(Message, Serialize, Deserialize, Clone, Hash, Ord, PartialOrd, Eq, PartialEq)]
 pub struct Address {
     /// The address type
     pub tt: u8,
     inner: Vec<u8>,
 }
+
 /// An error which is returned when address parsing from string fails
 #[derive(Debug)]
 pub struct AddressParseError {
